@@ -1,6 +1,6 @@
 # Simulator of Web Infrastructure and Management
 
-## Instalation
+## Installation
 This covers how to install it in Ubuntu.
 
 The first step is to install OMNeT++, the simulation framework. 
