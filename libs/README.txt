@@ -1,0 +1,1 @@
+Put all the OMNET shared libs here to run the simulation in a machine where OMNET is not installed

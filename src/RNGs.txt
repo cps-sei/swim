@@ -1,0 +1,6 @@
+Random Number Generators Usage
+
+Default RNG: serviceTime
+
+RNG 1: PredictableRandomSource
+RNG 2: Brownout (decide between mandatory and optional for a response)
