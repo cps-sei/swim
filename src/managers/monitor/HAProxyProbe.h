@@ -17,7 +17,7 @@
 
 #include <boost/asio.hpp>
 #include "IProbe.h"
-#include "HAProxySocketCommand.h"
+#include "util/HAProxySocketCommand.h"
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <map>
 #include <string>

@@ -13,7 +13,7 @@
  * DM-0003883
  *******************************************************************************/
 
-#include <HAProxySocketCommand.h>
+#include "HAProxySocketCommand.h"
 #include <string.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -46,9 +46,13 @@ std::string HAProxySocketCommand::executeCommand(const std::string& cmd) {
         close(socket_fd);
         throw runtime_error("ExecutionManagerHAProxy::sendHAProxyCommand connect() failed");
     }
-    write(socket_fd, cmd.c_str(), cmd.length());
+    ssize_t n = write(socket_fd, cmd.c_str(), cmd.length());
+    if (n < (ssize_t) cmd.length()) {
+        close(socket_fd);
+        throw runtime_error("ExecutionManagerHAProxy::sendHAProxyCommand write() failed");
+    }
     char buffer[4096 + 1];
-    ssize_t n = read(socket_fd, buffer, 4096);
+    n = read(socket_fd, buffer, 4096);
     if (n == -1) {
         close(socket_fd);
         throw runtime_error("ExecutionManagerHAProxy::sendHAProxyCommand read() failed");

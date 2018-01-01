@@ -17,8 +17,8 @@
 #include <boost/tokenizer.hpp>
 #include <cstdlib>
 #include "PassiveQueue.h"
-#include "MTServer.h"
-#include "MTBrownoutServer.h"
+#include "modules/MTServer.h"
+#include "modules/MTBrownoutServer.h"
 #include <util/Utils.h>
 
 

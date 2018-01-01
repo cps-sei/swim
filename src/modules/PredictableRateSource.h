@@ -22,7 +22,7 @@
 #ifndef PREDICTABLERATESOURCE_H_
 #define PREDICTABLERATESOURCE_H_
 
-#include <PredictableSource.h>
+#include "PredictableSource.h"
 
 class PredictableRateSource: public PredictableSource {
 

@@ -14,7 +14,7 @@
  *******************************************************************************/
 #include "SimProbe.h"
 #include <model/Model.h>
-#include <execution/ExecutionManagerModBase.h>
+#include <managers/execution/ExecutionManagerModBase.h>
 
 using namespace omnetpp;
 

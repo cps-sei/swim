@@ -15,9 +15,9 @@
 #include "SimpleMonitor.h"
 
 #include <cmath>
-#include "UtilityScorer.h"
-#include "ModulePriorities.h"
-#include "ExecutionManagerModBase.h"
+#include "managers/adaptation/UtilityScorer.h"
+#include "managers/ModulePriorities.h"
+#include "managers/execution/ExecutionManagerModBase.h"
 
 using namespace std;
 using namespace omnetpp;

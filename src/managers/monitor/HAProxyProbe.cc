@@ -14,8 +14,8 @@
  *******************************************************************************/
 #include "HAProxyProbe.h"
 #include <sstream>
-#include "ModulePriorities.h"
-#include <execution/ExecutionManagerModBase.h>
+#include "managers/ModulePriorities.h"
+#include <managers/execution/ExecutionManagerModBase.h>
 
 using namespace std;
 using namespace omnetpp;

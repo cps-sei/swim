@@ -16,7 +16,7 @@
 #define __PLASASIM_EXECUTIONMANAGERHAPROXY_H_
 
 #include "ExecutionManagerModBase.h"
-#include "HAProxySocketCommand.h"
+#include "util/HAProxySocketCommand.h"
 
 /**
  * Execution Manager to control HAProxy

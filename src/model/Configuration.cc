@@ -12,7 +12,7 @@
  * Released under a BSD license, please see license.txt for full terms.
  * DM-0003883
  *******************************************************************************/
-#include <Configuration.h>
+#include "Configuration.h"
 #include <typeinfo>
 
 //    int brownoutLevel = 1 + (pModel->getNumberOfBrownoutLevels() - 1) * pModel->getConfiguration().getBrownOutFactor();

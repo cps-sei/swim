@@ -12,7 +12,7 @@
  * Released under a BSD license, please see license.txt for full terms.
  * DM-0003883
  *******************************************************************************/
-#include <Environment.h>
+#include "Environment.h"
 
 Environment::Environment() : arrivalMean(0), arrivalVariance(0) {}
 
