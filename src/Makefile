@@ -16,13 +16,13 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LI
 #USERIF_LIBS = $(QTENV_LIBS)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I. -Imodel/pladaptMock -I/root/plasasimtop/queueinglib
+INCLUDE_PATH = -I. -Imodel/pladaptMock -I../../queueinglib
 
 # Additional object and library files to link with
 EXTRA_OBJS = -lboost_system
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)/root/plasasimtop/queueinglib/out/gcc-release  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
+LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)../../queueinglib/out/gcc-release  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -89,7 +89,7 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(TOOLCHAIN_NAME),clangc2)
-LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath /root/plasasimtop/queueinglib/out/gcc-release)
+LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath ../../queueinglib/out/gcc-release)
 endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
