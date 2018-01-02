@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for swim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -o swim -I/root/plasasimtop/queueinglib -I. -Imodel/pladaptMock -L../libs -L/root/plasasimtop/queueinglib/out/gcc-release -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread -Xmanagers/monitor/notUsed -- -lboost_system
+#  opp_makemake -f --deep -o swim -I. -Imodel/pladaptMock -I/root/plasasimtop/queueinglib -L../libs -L/root/plasasimtop/queueinglib/out/gcc-release -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread -Xmanagers/monitor/notUsed -- -lboost_system
 #
 
 # Name of target to be created (-o option)
@@ -16,7 +16,7 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LI
 #USERIF_LIBS = $(QTENV_LIBS)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I/root/plasasimtop/queueinglib -I. -Imodel/pladaptMock
+INCLUDE_PATH = -I. -Imodel/pladaptMock -I/root/plasasimtop/queueinglib
 
 # Additional object and library files to link with
 EXTRA_OBJS = -lboost_system
