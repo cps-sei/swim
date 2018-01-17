@@ -41,7 +41,6 @@ network SWIM_SA
         int maxServers = default(1);
         int numberOfBrownoutLevels;
         string adaptationManagerType;
-        string utilityFunctionType;
         double dimmerMargin = default(0.0);
         double responseTimeThreshold @unit(s) = default(1s);
         double maxServiceRate;

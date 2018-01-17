@@ -2,6 +2,13 @@
 MAINSIMDIR=../../src/
 MAINSIMEXEC=swim
 
+if [ $# -lt 1 ]; then
+	echo "usage: $0 config [run-number(s)|all [ini-file]]"
+	echo example:
+	echo "  "$0 Reactive 0..2
+	exit 1
+fi
+
 RUNS=""
 if [ "$2" != "" ] && [ "$2" != "all" ]; then
     RUNS="-r $2"
