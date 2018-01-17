@@ -21,8 +21,8 @@
 #include <vector>
 #include <functional>
 #include <map>
-#include <model/Model.h>
-#include <managers/monitor/IProbe.h>
+#include "model/Model.h"
+#include "managers/monitor/IProbe.h"
 
 /**
  * Adaptation interface (probes and effectors)
@@ -48,6 +48,7 @@ protected:
     virtual std::string cmdGetDimmer(const std::vector<std::string>& args);
     virtual std::string cmdGetServers(const std::vector<std::string>& args);
     virtual std::string cmdGetActiveServers(const std::vector<std::string>& args);
+    virtual std::string cmdGetMaxServers(const std::vector<std::string>& args);
     virtual std::string cmdGetUtilization(const std::vector<std::string>& args);
     virtual std::string cmdGetBasicResponseTime(const std::vector<std::string>& args);
     virtual std::string cmdGetBasicThroughput(const std::vector<std::string>& args);

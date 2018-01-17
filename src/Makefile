@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for swim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -o swim -I. -Imodel/pladaptMock -I/root/plasasimtop/queueinglib -L../libs -L/root/plasasimtop/queueinglib/out/gcc-release -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread -Xmanagers/monitor/notUsed -- -lboost_system
+#  opp_makemake -f --deep -o swim -I. -Imodel/pladaptMock -I../../queueinglib -L../libs -L../../queueinglib/ -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 #
 
 # Name of target to be created (-o option)
@@ -19,10 +19,10 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LI
 INCLUDE_PATH = -I. -Imodel/pladaptMock -I../../queueinglib
 
 # Additional object and library files to link with
-EXTRA_OBJS = -lboost_system
+EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)../../queueinglib/out/gcc-release  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
+LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)../../queueinglib/  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -32,10 +32,18 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/externalControl/AdaptInterface.o \
+    $O/managers/adaptation/BaseAdaptationManager.o \
+    $O/managers/adaptation/ReactiveAdaptationManager.o \
     $O/managers/adaptation/UtilityScorer.o \
+    $O/managers/execution/AddServerTactic.o \
     $O/managers/execution/ExecutionManagerHAProxy.o \
     $O/managers/execution/ExecutionManagerMod.o \
     $O/managers/execution/ExecutionManagerModBase.o \
+    $O/managers/execution/MacroTactic.o \
+    $O/managers/execution/RemoveServerTactic.o \
+    $O/managers/execution/SetBrownoutTactic.o \
+    $O/managers/execution/SetDimmerTactic.o \
+    $O/managers/execution/Tactic.o \
     $O/managers/monitor/HAProxyProbe.o \
     $O/managers/monitor/IProbe.o \
     $O/managers/monitor/SimpleMonitor.o \
@@ -89,7 +97,7 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(TOOLCHAIN_NAME),clangc2)
-LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath ../../queueinglib/out/gcc-release)
+LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath ../../queueinglib/)
 endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)

@@ -40,6 +40,7 @@ AdaptInterface::AdaptInterface() {
     commandHandlers["get_dimmer"] = std::bind(&AdaptInterface::cmdGetDimmer, this, std::placeholders::_1);
     commandHandlers["get_servers"] = std::bind(&AdaptInterface::cmdGetServers, this, std::placeholders::_1);
     commandHandlers["get_active_servers"] = std::bind(&AdaptInterface::cmdGetActiveServers, this, std::placeholders::_1);
+    commandHandlers["get_max_servers"] = std::bind(&AdaptInterface::cmdGetMaxServers, this, std::placeholders::_1);
     commandHandlers["get_utilization"] = std::bind(&AdaptInterface::cmdGetUtilization, this, std::placeholders::_1);
     commandHandlers["get_basic_rt"] = std::bind(&AdaptInterface::cmdGetBasicResponseTime, this, std::placeholders::_1);
     commandHandlers["get_basic_throughput"] = std::bind(&AdaptInterface::cmdGetBasicThroughput, this, std::placeholders::_1);
@@ -158,6 +159,14 @@ std::string AdaptInterface::cmdGetServers(const std::vector<std::string>& args) 
 std::string AdaptInterface::cmdGetActiveServers(const std::vector<std::string>& args) {
     ostringstream reply;
     reply << pModel->getActiveServers() << '\n';
+
+    return reply.str();
+}
+
+
+std::string AdaptInterface::cmdGetMaxServers(const std::vector<std::string>& args) {
+    ostringstream reply;
+    reply << pModel->getMaxServers() << '\n';
 
     return reply.str();
 }

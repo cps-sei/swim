@@ -1,0 +1,4 @@
+**/results/
+/.computed/
+/out/
+/gcc-debug/

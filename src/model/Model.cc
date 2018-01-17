@@ -146,6 +146,14 @@ double Model::getBrownoutFactor() const {
     return brownoutFactor;
 }
 
+void Model::setDimmerFactor(double factor) {
+    setBrownoutFactor(1.0 - factor);
+}
+
+double Model::getDimmerFactor() const {
+    return 1.0 - getBrownoutFactor();
+}
+
 int const Model::getActiveServers() const {
     return activeServers;
 }
@@ -267,6 +275,11 @@ int Model::getNumberOfBrownoutLevels() const {
     return numberOfBrownoutLevels;
 }
 
+int Model::getNumberOfDimmerLevels() const {
+    return numberOfBrownoutLevels;
+}
+
+
 double Model::getLowFidelityServiceTime() const {
     return lowFidelityServiceTime;
 }
@@ -318,6 +331,22 @@ int Model::brownoutFactorToLevel(double brownoutFactor) const {
     }
     return 1 + round((brownoutFactor - dimmerMargin) * (getNumberOfBrownoutLevels() - 1) / (1.0 - 2 * dimmerMargin));
 }
+
+
+bool Model::isDimmerMarginLower() const {
+    return lowerDimmerMargin;
+}
+
+double Model::dimmerLevelToFactor(int dimmerLevel) const {
+    int brownoutLevel = getNumberOfBrownoutLevels() - dimmerLevel + 1;
+
+    return brownoutLevelToFactor(brownoutLevel);
+}
+
+int Model::dimmerFactorToLevel(double dimmerFactor) const {
+    return brownoutFactorToLevel(1.0 - dimmerFactor);
+}
+
 
 double Model::getDimmerMargin() const {
     return dimmerMargin;

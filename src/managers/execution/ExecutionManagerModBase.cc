@@ -128,7 +128,7 @@ void ExecutionManagerModBase::removeServer() {
 
 void ExecutionManagerModBase::setBrownout(double factor) {
     Enter_Method("setBrownout()");
-    cout << "t=" << simTime() << " executing setBrownout(" << factor << ")" << endl;
+    cout << "t=" << simTime() << " executing setDimmer(" << 1.0 - factor << ")" << endl;
     pModel->setBrownoutFactor(factor);
     doSetBrownout(factor);
     emit(brownoutSetSignal, true);

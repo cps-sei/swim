@@ -101,8 +101,6 @@ public:
      * Returns the expected number of active servers at a time in the future
      */
     int getActiveServerCountIn(double deltaTime);
-    void setBrownoutFactor(double factor);
-    double getBrownoutFactor() const;
     int const getActiveServers() const;
     int const getServers() const;
 
@@ -119,7 +117,6 @@ public:
     double getEvaluationPeriod() const;
     double getBootDelay() const;
     int getHorizon() const;
-    int getNumberOfBrownoutLevels() const;
 
     double getLowFidelityServiceTime() const;
     void setLowFidelityServiceTime(double lowFidelityServiceTimeMean, double lowFidelityServiceTimeVariance);
@@ -131,8 +128,26 @@ public:
     double getLowFidelityServiceTimeVariance() const;
     double getServiceTimeVariance() const;
 
+    void setDimmerFactor(double factor);
+    double getDimmerFactor() const;
+
+    /**
+     * Returns true if dimmer margin is only used at the bottom of the range
+     */
+    bool isDimmerMarginLower() const;
+
+    int getNumberOfDimmerLevels() const;
+    double dimmerLevelToFactor(int dimmerLevel) const;
+    int dimmerFactorToLevel(double dimmerFactor) const;
+
+    // brownout is the complement of dimmer
+    void setBrownoutFactor(double factor);
+    double getBrownoutFactor() const;
+
+    int getNumberOfBrownoutLevels() const;
     double brownoutLevelToFactor(int brownoutLevel) const;
     int brownoutFactorToLevel(double brownoutFactor) const;
+
     double getDimmerMargin() const;
 
     virtual ~Model();
