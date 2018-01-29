@@ -33,32 +33,28 @@ Define_Module(ReactiveAdaptationManager);
  */
 Tactic* ReactiveAdaptationManager::evaluate() {
     MacroTactic* pMacroTactic = new MacroTactic;
-
     Model* pModel = getModel();
-
     const double dimmerStep = 1.0 / (pModel->getNumberOfDimmerLevels() - 1);
-
-    double dimmerFactor = pModel->getDimmerFactor();
+    double dimmer = pModel->getDimmerFactor();
     double spareUtilization =  pModel->getConfiguration().getActiveServers() - pModel->getObservations().utilization;
     bool isServerBooting = pModel->getServers() > pModel->getActiveServers();
-
     double responseTime = pModel->getObservations().avgResponseTime;
 
     if (responseTime > RT_THRESHOLD) {
         if (!isServerBooting
                 && pModel->getServers() < pModel->getMaxServers()) {
             pMacroTactic->addTactic(new AddServerTactic);
-        } else if (dimmerFactor > 0.0) {
-            dimmerFactor = max(0.0, dimmerFactor - dimmerStep);
-            pMacroTactic->addTactic(new SetDimmerTactic(dimmerFactor));
+        } else if (dimmer > 0.0) {
+            dimmer = max(0.0, dimmer - dimmerStep);
+            pMacroTactic->addTactic(new SetDimmerTactic(dimmer));
         }
-    } else if (responseTime < RT_THRESHOLD) { // see if we can increase dimmer or remove servers
+    } else if (responseTime < RT_THRESHOLD) { // can we increase dimmer or remove servers?
 
         // only if there is more than one server of spare capacity
         if (spareUtilization > 1) {
-            if (dimmerFactor < 1.0) {
-                dimmerFactor = min(1.0, dimmerFactor + dimmerStep);
-                pMacroTactic->addTactic(new SetDimmerTactic(dimmerFactor));
+            if (dimmer < 1.0) {
+                dimmer = min(1.0, dimmer + dimmerStep);
+                pMacroTactic->addTactic(new SetDimmerTactic(dimmer));
             } else if (!isServerBooting
                     && pModel->getServers() > 1) {
                 pMacroTactic->addTactic(new RemoveServerTactic);
@@ -66,9 +62,5 @@ Tactic* ReactiveAdaptationManager::evaluate() {
         }
     }
 
-    if (pMacroTactic->isEmpty()) {
-        delete pMacroTactic;
-        pMacroTactic = 0;
-    }
     return pMacroTactic;
 }

@@ -26,7 +26,12 @@ void MacroTactic::execute(ExecutionManager* execMgr) {
 }
 
 bool MacroTactic::isEmpty() const {
-    return tactics.empty();
+    for (TacticList::const_iterator it = tactics.begin(); it != tactics.end(); ++it) {
+        if (!(*it)->isEmpty()) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool MacroTactic::isSingle() const {

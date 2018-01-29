@@ -51,9 +51,11 @@ void BaseAdaptationManager::initialize(int stage)
 
 void BaseAdaptationManager::decisionComplete() {
     if (pTactic) {
-        std::cout << "AdaptationMgr simtime=" << simTime() << " tactic=" << *pTactic << std::endl;
-        ExecutionManager* pExecMgr = check_and_cast<ExecutionManager*> (getParentModule()->getSubmodule("executionManager"));
-        pTactic->execute(pExecMgr);
+        if (!pTactic->isEmpty()) {
+            std::cout << "AdaptationMgr simtime=" << simTime() << " tactic=" << *pTactic << std::endl;
+            ExecutionManager* pExecMgr = check_and_cast<ExecutionManager*> (getParentModule()->getSubmodule("executionManager"));
+            pTactic->execute(pExecMgr);
+        }
         delete pTactic;
         pTactic = nullptr;
     }

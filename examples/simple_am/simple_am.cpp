@@ -18,12 +18,11 @@
 using namespace std;
 
 const int NUMBER_OF_DIMMER_LEVELS = 5;
+const double DIMMER_STEP = 1.0 / (NUMBER_OF_DIMMER_LEVELS - 1);
 const double RT_THRESHOLD = 0.75;
 const int PERIOD = 60;
 
 void simpleAdaptationManager(SwimClient& swim) {
-    const double dimmerStep = 1.0 / (NUMBER_OF_DIMMER_LEVELS - 1);
-
     while (swim.isConnected()) {
         double dimmer = swim.getDimmer();
         int servers = swim.getServers();
@@ -36,17 +35,17 @@ void simpleAdaptationManager(SwimClient& swim) {
                     && servers < swim.getMaxServers()) {
                 swim.addServer();
             } else if (dimmer > 0.0) {
-                dimmer = max(0.0, dimmer - dimmerStep);
+                dimmer = max(0.0, dimmer - DIMMER_STEP);
                 swim.setDimmer(dimmer);
             }
-        } else if (responseTime < RT_THRESHOLD) { // see if we can increase dimmer or remove servers
+        } else if (responseTime < RT_THRESHOLD) { // can we increase dimmer or remove servers?
 
             // only if there is more than one server of spare capacity
             double spareUtilization = activeServers - swim.getTotalUtilization();
 
             if (spareUtilization > 1) {
                 if (dimmer < 1.0) {
-                    dimmer = min(1.0, dimmer + dimmerStep);
+                    dimmer = min(1.0, dimmer + DIMMER_STEP);
                     swim.setDimmer(dimmer);
                 } else if (!isServerBooting && servers > 1) {
                     swim.removeServer();

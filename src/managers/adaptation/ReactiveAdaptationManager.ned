@@ -21,7 +21,7 @@ package plasa.managers.adaptation;
 simple ReactiveAdaptationManager like IAdaptationManager
 {
     parameters:
-        bool simulateDecisionDelay = default(false);
+        bool simulateDecisionDelay = default(true);
         
         @signal[decisionTime](type="double");
         @statistic[decisionTime](unit=msec; record=mean,max,vector);

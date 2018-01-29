@@ -21,6 +21,11 @@
 
 #include "Tactic.h"
 
+
+bool Tactic::isEmpty() const {
+    return false;
+}
+
 std::ostream& operator<<(std::ostream& os, const Tactic& tactic) {
     tactic.printOn(os);
     return os;

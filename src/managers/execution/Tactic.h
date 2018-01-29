@@ -30,6 +30,14 @@ public:
     virtual void execute(ExecutionManager* execMgr) = 0;
 
     /**
+     * Indicates if a tactic is empty.
+     *
+     * The only tactic that can be empty is a MacroTactic
+     */
+    virtual bool isEmpty() const;
+
+
+    /**
      * Print tactic info
      *
      * @param os output stream
