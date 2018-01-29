@@ -6,12 +6,9 @@ RUN apt update && apt install -y --no-install-recommends libboost-all-dev git r-
 
 ENV BASE_DIR=${HOME}/seams-swim
 
-RUN mkdir -p ${BASE_DIR}/swim
-
 WORKDIR ${BASE_DIR}
 
-RUN wget https://github.com/cps-sei/swim/archive/seams-artifact.tar.gz
-RUN tar -xzf seams-artifact.tar.gz -C swim --strip-components=1 && rm seams-artifact.tar.gz
+RUN git clone https://github.com/cps-sei/swim.git
 
 RUN tar xzf swim/queueinglib.tgz
 
@@ -29,4 +26,12 @@ RUN make
 
 RUN R -e 'install.packages("https://github.com/wilkelab/cowplot/archive/0.6.3.tar.gz", repos=NULL)'
 
+# configure OMNeT++ IDE
+WORKDIR ${BASE_DIR}
+RUN mkdir -p workspace; $(dirname `which omnetpp`)/../ide/omnetpp -nosplash -data workspace -application org.eclipse.cdt.managedbuilder.core.headlessbuild -importAll .
+
 WORKDIR ${HOME}
+RUN mkdir -p .local/share/applications/
+COPY omnetpp.desktop .local/share/applications/
+
+

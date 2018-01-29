@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for swim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -o swim -KQUEUEINGLIB_PROJ=../../queueinglib -I. -Imodel/pladaptMock -I$$\(QUEUEINGLIB_PROJ\) -L../libs -L$$\(QUEUEINGLIB_PROJ\) -L$$\(QUEUEINGLIB_PROJ\) -lqueueinglib_dbg -lboost_serialization -lboost_system -lboost_filesystem -lpthread -- -lboost_system
+#  opp_makemake -f --deep -o swim -KQUEUEINGLIB_PROJ=../../queueinglib -I. -Imodel/pladaptMock -I$$\(QUEUEINGLIB_PROJ\) -L../libs -L$$\(QUEUEINGLIB_PROJ\) -L$$\(QUEUEINGLIB_PROJ\) -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread -- -lboost_system
 #
 
 # Name of target to be created (-o option)
@@ -22,7 +22,7 @@ INCLUDE_PATH = -I. -Imodel/pladaptMock -I$(QUEUEINGLIB_PROJ)
 EXTRA_OBJS = -lboost_system
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ) $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ)  -lqueueinglib_dbg -lboost_serialization -lboost_system -lboost_filesystem -lpthread
+LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ) $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ)  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -34,6 +34,7 @@ OBJS = \
     $O/externalControl/AdaptInterface.o \
     $O/managers/adaptation/BaseAdaptationManager.o \
     $O/managers/adaptation/ReactiveAdaptationManager.o \
+    $O/managers/adaptation/ReactiveAdaptationManager2.o \
     $O/managers/adaptation/UtilityScorer.o \
     $O/managers/execution/AddServerTactic.o \
     $O/managers/execution/ExecutionManagerHAProxy.o \

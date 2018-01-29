@@ -31,8 +31,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.2023551690" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.2130403752" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1785595571" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/plasasim/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/plasasim/src/model/pladaptMock}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/src/model/pladaptMock}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../queueinglib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.557848848" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -44,7 +44,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.1013229138" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1599360589" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 								<option id="gnu.cpp.link.option.paths.363532067" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/plasasim/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/libs}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../queueinglib/&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.902626853" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs"/>
@@ -69,6 +69,9 @@
 		</cconfiguration>
 		<cconfiguration id="org.omnetpp.cdt.gnu.config.release.784435172">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.omnetpp.cdt.gnu.config.release.784435172" moduleId="org.eclipse.cdt.core.settings" name="gcc-release">
+				<macros>
+					<stringMacro name="ADAPTMGRLIB" type="VALUE_TEXT" value="-lboost_system"/>
+				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.MachO64" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -90,9 +93,9 @@
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.111693565" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.104894387" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1559940868" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/proactive}&quot;"/>
-									<listOptionValue builtIn="false" value="/home/gmoreno/research/tools/easykf/src"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/adaptmgr/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/src/model/pladaptMock}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../queueinglib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2143223885" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -106,9 +109,8 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="/home/gmoreno/research/tools/easykf/Build/src/"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1124526304" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/gmoreno/research/tools/easykf/Build/src"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/queueinglib}&quot;"/>
-									<listOptionValue builtIn="false" value="../../plasasim-mods/out/gcc-debug"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../queueinglib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.749106533" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -174,7 +176,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.273403174" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1869371683" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
 								<option id="gnu.cpp.link.option.paths.1702491923" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/plasasim/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/swim/libs}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/queueinglib/out/gcc-debug}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../adaptmgr/Debug"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/plasasim-mods/out/gcc-debug/src}&quot;"/>
@@ -206,10 +208,10 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="gcc-release">
-			<resource resourceType="PROJECT" workspacePath="/plasasim"/>
+			<resource resourceType="PROJECT" workspacePath="/swim"/>
 		</configuration>
 		<configuration configurationName="gcc-debug">
-			<resource resourceType="PROJECT" workspacePath="/plasasim"/>
+			<resource resourceType="PROJECT" workspacePath="/swim"/>
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=OMNeT++
+Comment=OMNeT++ IDE
+Exec=omnetpp -data seams-swim/workspace
+Icon=/opt/omnetpp-5.2.1/ide/icon.png
+Terminal=false
+StartupNotify=false
+Categories=Development;

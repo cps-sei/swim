@@ -13,15 +13,15 @@
  * DM-0003883
  *******************************************************************************/
 
-#ifndef __PLASASIM_REACTIVEADAPTATIONMANAGER_H_
-#define __PLASASIM_REACTIVEADAPTATIONMANAGER_H_
+#ifndef __PLASASIM_REACTIVEADAPTATIONMANAGER2_H_
+#define __PLASASIM_REACTIVEADAPTATIONMANAGER2_H_
 
 #include "BaseAdaptationManager.h"
 
 /**
- * Simple reactive adaptation manager
+ * Simple reactive adaptation manager (alternative 2)
  */
-class ReactiveAdaptationManager : public BaseAdaptationManager
+class ReactiveAdaptationManager2 : public BaseAdaptationManager
 {
   protected:
     virtual Tactic* evaluate();
