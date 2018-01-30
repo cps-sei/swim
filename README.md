@@ -45,7 +45,7 @@ SWIM can be accessed in several modes:
 
 1. With an adaptation as a simulation module
 2. With the included external adaptation manager
-3. With another external adaptation manager of your choice
+3. With another external adaptation manager that uses the TCP interface of SWIM
 
 ### How to run simulation with adaptation manager as a module:
 1. Start a Terminal Emulator from the `Applications` menu in the top-left corner. This opens a terminal within the container. 
@@ -61,34 +61,35 @@ The arguments for the run command are as follows:
 The config argument is a named configuration defined in the ini file.
 The optional argument to select which run to execute can include a list of comma-separated run numbers without spaces (e.g., `1,3,4`), or a range or run numbers (e.g., `0-4`).
 The optional third argument can be used to specify a different ini file (the default is `swim_sa.ini`).
-For details about how configurations and runs are defined see the [OMNeT++ manual](https://omnetpp.org/doc/omnetpp/manual). With the default ini file, run 1 uses the WorldCup trace with a server boot delay of 60 seconds.<br /><br />
-When the previous command is run, you will see the output of the simulation.
+For details about how configurations and runs are defined see the [OMNeT++ manual](https://omnetpp.org/doc/omnetpp/manual). With the default ini file, run 1 uses the WorldCup trace with a server boot delay of 60 seconds.  
+
+When the previous command is run, you will see the output of the events in the simulation.
 ```
    ../../src//swim swim_sa.ini -u Cmdenv -c Reactive -n ..:../../src:....
    Reactive run 1: $trace=...
    ...
    All runs completed
 ```
-3. After the simulation has finished, the results for this are put in the directory	 `~/seams-swim/results/SWIM_SA` which defines a SQLite database of all the results. These results can be plotted using R, whose use is automated through a shell script. Open another terminal emulator, and type the commands below, after which a plot of the simulation will be displayed (and saved in the file `plot.png`).
-Alternatively, you can use a file name with a `.pdf` extension to generate a PDF file.
+3. After the simulation has finished, the results for this are put in the directory	 `~/seams-swim/results/SWIM_SA` which defines a SQLite database of all the results. These results can be plotted using R, whose use is automated through a shell script. Open another terminal emulator, and type the commands below, after which a plot of the simulation will be displayed (and saved in the file `plot.pdf`).
+Alternatively, you can use a file name with a `.png` extension to generate a PNG file.
 ```
    > cd ~/seams-swim/results/
-   > ../swim/tools/plotResults.sh SWIM_SA Reactive 1 plot.png
+   > ../swim/tools/plotResults.sh SWIM_SA Reactive 1 plot.pdf
 ```
 
 #### Comparing with another adaptation manager
-SWIM includes a second example adaptation manager to show how changes in adaptation managers can be compared.
+SWIM includes a second sample adaptation manager to show how changes in adaptation managers can be compared.
 The adaptation manager used by the configuration `Reactive` removes a server if the response time is below the threshold and the dimmer setting is at the maximum, _and if there is more than one server of spare capacity_.
 A configuration named `Reactive2` uses a second adaptation manager that is the same as the previous one, except that this one does not have the condition regarding the spare capacity.
-<br /><br />
-To see how this two compare, run the experiment and generate a new plot with the following commands.
+
+To see how these two adaptation managers compare, run the experiment and generate a new plot with the following commands.
 ```
    > cd ~/seams-swim/swim/simulations/swim_sa/
    > ./run.sh Reactive2 1
    > cd ~/seams-swim/results/
-   > ../swim/tools/plotResults.sh SWIM_SA Reactive2 1 plot2.png
+   > ../swim/tools/plotResults.sh SWIM_SA Reactive2 1 plot2.pdf
 ```
-If the previous plot was closed, it can be reopened with `gnome-open plot.png`.
+If the previous plot was closed, it can be reopened with `gnome-open plot.pdf`.
 Comparing the two results we can see that the second adaptation manager misses the response time requirement more often than the first one and obtains less utility.
 
 ### How to run simulation with included external adaptation manager:
