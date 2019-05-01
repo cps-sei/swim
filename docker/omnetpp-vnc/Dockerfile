@@ -18,7 +18,7 @@ WORKDIR /opt/omnetpp-5.4.1
 ENV PATH $PATH:/opt/omnetpp-5.4.1/bin
 
 # Configure and compile omnet++
-RUN xvfb-run ./configure WITH_OSG=no WITH_OSGEARTH=no && make
+RUN xvfb-run ./configure WITH_OSG=no WITH_OSGEARTH=no && make -j$(nproc)
 
 # Cleanup
 RUN apt-get clean && \
