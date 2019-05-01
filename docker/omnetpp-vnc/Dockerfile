@@ -8,14 +8,14 @@ RUN apt update && apt install -y --no-install-recommends build-essential gcc g++
 
 RUN wget --header="Accept: text/html" \
          --referer="https://omnetpp.org" \
-         --output-document=omnetpp-5.2.1-src.tgz \
-         https://omnetpp.org/omnetpp/send/30-omnet-releases/2321-omnetpp-5-2-1-linux
+         --output-document=omnetpp-5.4.1-src-linux.tgz \
+         https://ipfs.omnetpp.org/release/5.4.1/omnetpp-5.4.1-src-linux.tgz
 
-RUN tar --directory=/opt -xzf omnetpp-5.2.1-src.tgz && rm omnetpp-5.2.1-src.tgz
+RUN tar --directory=/opt -xzf omnetpp-5.4.1-src-linux.tgz && rm omnetpp-5.4.1-src-linux.tgz
 
-WORKDIR /opt/omnetpp-5.2.1
+WORKDIR /opt/omnetpp-5.4.1
 
-ENV PATH $PATH:/opt/omnetpp-5.2.1/bin
+ENV PATH $PATH:/opt/omnetpp-5.4.1/bin
 
 # Configure and compile omnet++
 RUN xvfb-run ./configure WITH_OSG=no WITH_OSGEARTH=no && make
@@ -23,7 +23,7 @@ RUN xvfb-run ./configure WITH_OSG=no WITH_OSGEARTH=no && make
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt && \
-  rm -f /omnetpp-5.2.1-src.tgz
+  rm -f /omnetpp-5.4.1-src-linux.tgz
 
 WORKDIR $HOME
 
