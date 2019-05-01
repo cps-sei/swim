@@ -14,15 +14,15 @@ RUN tar xzf swim/queueinglib.tgz
 
 WORKDIR ${BASE_DIR}/queueinglib
 
-RUN make
+RUN make -j$(nproc)
 
 WORKDIR ${BASE_DIR}/swim
 
-RUN make cleanall && make makefiles && make
+RUN make cleanall && make makefiles && make -j$(nproc)
 
 WORKDIR ${BASE_DIR}/swim/examples/simple_am
 
-RUN make
+RUN make -j$(nproc)
 
 RUN R -e 'install.packages("https://github.com/wilkelab/cowplot/archive/0.6.3.tar.gz", repos=NULL)'
 
