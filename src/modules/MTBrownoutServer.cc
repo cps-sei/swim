@@ -78,7 +78,7 @@ simtime_t MTBrownoutServer::generateJobServiceTime(queueing::Job* pJob)  {
 
     if (cacheLow || pJob->getKind() != 1) {
         double delta = (pJob->getKind() == 1) ? cacheDeltaLow : cacheDelta;
-        double lambda = (-1 / cacheRequestCount) * (log(cachePrecision * delta) - log(delta));
+        double lambda = (-1.0 / cacheRequestCount) * (log(cachePrecision * delta) - log(delta));
 
         /* note that this assumes that this module is inside an AppServer module with a unique name */
         long myRequestCount = requestCount[this->getParentModule()->getName()];

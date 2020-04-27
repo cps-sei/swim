@@ -7,7 +7,7 @@ SWIM uses Docker containers to automate deployment of the simulation into a virt
 ## Creating and connecting to a container
 As mentioned, SWIM is hosted on Docker Hub, and online repository for Docker containers. The first time docker is run, containers will be downloaded onto your host machine (multiple downloads will occur because containers are layered on each other, and SWIM is built on a number of Linux containers for windowing, simulation, etc.). This can be done with the following command run in a terminal or command prompt:
 ```
-   > docker run -d -p 5901:5901 -p 6901:6901 --name swim gabrielmoreno/swim:1.0
+   > docker run -d -p 5901:5901 -p 6901:6901 --name swim gabrielmoreno/swim
 ```
 
 The output will be something like this as it is downloading the Docker images.

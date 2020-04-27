@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for swim
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -o swim -KQUEUEINGLIB_PROJ=../../queueinglib -I. -Imodel/pladaptMock -I$$\(QUEUEINGLIB_PROJ\) -L../libs -L$$\(QUEUEINGLIB_PROJ\) -L$$\(QUEUEINGLIB_PROJ\) -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread -- -lboost_system
+#  opp_makemake -f --deep -o swim -I. -Imodel/pladaptMock -I../../queueinglib -L../libs -L../../queueinglib/ -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 #
 
 # Name of target to be created (-o option)
@@ -16,13 +16,13 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(TKENV_LIBS) $(QTENV_LIBS) $(CMDENV_LI
 #USERIF_LIBS = $(QTENV_LIBS)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I. -Imodel/pladaptMock -I$(QUEUEINGLIB_PROJ)
+INCLUDE_PATH = -I. -Imodel/pladaptMock -I../../queueinglib
 
 # Additional object and library files to link with
-EXTRA_OBJS = -lboost_system
+EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ) $(LDFLAG_LIBPATH)$(QUEUEINGLIB_PROJ)  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
+LIBS = $(LDFLAG_LIBPATH)../libs $(LDFLAG_LIBPATH)../../queueinglib/  -lqueueinglib -lboost_serialization -lboost_system -lboost_filesystem -lpthread
 
 # Output directory
 PROJECT_OUTPUT_DIR = ../out
@@ -75,9 +75,6 @@ MSGFILES = \
 # SM files
 SMFILES =
 
-# Other makefile variables (-K)
-QUEUEINGLIB_PROJ=../../queueinglib
-
 #------------------------------------------------------------------------------
 
 # Pull in OMNeT++ configuration (Makefile.inc)
@@ -101,7 +98,7 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(TOOLCHAIN_NAME),clangc2)
-LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath $(QUEUEINGLIB_PROJ)) -Wl,-rpath,$(abspath $(QUEUEINGLIB_PROJ))
+LIBS += -Wl,-rpath,$(abspath ../libs) -Wl,-rpath,$(abspath ../../queueinglib/)
 endif
 
 COPTS = $(CFLAGS) $(IMPORT_DEFINES)  $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
@@ -148,7 +145,7 @@ $O/%.o: %.cc $(COPTS_FILE) | msgheaders smheaders
 
 %_m.cc %_m.h: %.msg
 	$(qecho) MSGC: $<
-	$(Q)$(MSGC) -s _m.cc $(MSGCOPTS) $?
+	$(Q)$(MSGC) -s _m.cc -MD -MP -MF $O/$(basename $@).d $(MSGCOPTS) $?
 
 %_sm.cc %_sm.h: %.sm
 	$(qecho) SMC: $<
