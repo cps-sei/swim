@@ -5,7 +5,7 @@ This covers how to install it in Ubuntu.
 
 The first step is to install OMNeT++, the simulation framework.
 
-- Download [OMNeT++ 5.2](https://omnetpp.org/omnetpp)
+- Download [OMNeT++ 5.4.1](https://omnetpp.org/download/)
 - Install OMNeT++ following the [installation guide](https://omnetpp.org/doc/omnetpp/InstallGuide.pdf)
 
 
@@ -54,16 +54,4 @@ cd ..
 ```
 
 ## Running the simulation
-Before running the simulation, check the entry `result-dir` in `simulations/swim/swim.ini`. The path is the directory where the result files while be saved. Note that this path is also used in `runexp.sh`, so if it is changed, it must be changed in both files.
-
-To run the simulation:
-```
-cd swim/simulations/swim
-./runexp.sh sim 1
-```
-
-where `sim` is a configuration defined in `simulations/swim/swim.ini`, and `1` is a run number (see documentation for parameter studies in the OMNeT++ manual). Optionally, a third argument with the path of an `.ini` file can be passed.
-
-To look at the results, one option is to launch OMNeT++, and create a project changing its location to the value of `result-dir` in the `.ini` file.
-The results are stored in the files `sim-*.sca` and `sim-*.vec`. The former contains scalar values corresponding to the configuration of the experiment and results recorded at the end of the run, such as the accumulated utility. The `.vec` file contains vectors of different metrics collected during the run, such as the utility accrued per period, the number of servers, and active servers, the arrival rate, etc.
-The data in these files can be explored and plotted using the Analysis Editor in OMNeT++ (see the chapter 9 in [OMNeT++ User Guide](https://omnetpp.org/doc/omnetpp/UserGuide.pdf)) or any other tool that can read SQLite databases.  
+To run the simulation and look at the results, follow the instructions in the main [README.md](README.md#running-swim)
