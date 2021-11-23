@@ -22,7 +22,6 @@
 #include "ExecutionManager.h"
 
 class ExecutionManagerModBase : public omnetpp::cSimpleModule, public ExecutionManager {
-    int serverRemoveInProgress;
     omnetpp::simsignal_t serverRemovedSignal;
     omnetpp::simsignal_t serverAddedSignal;
     omnetpp::simsignal_t serverActivatedSignal;

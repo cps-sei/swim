@@ -18,22 +18,22 @@
 #include <omnetpp.h>
 #include <set>
 #include "BootComplete_m.h"
+#include "RemoveComplete_m.h"
 #include <model/Model.h>
 #include "ExecutionManagerModBase.h"
 
 class ExecutionManagerMod : public ExecutionManagerModBase, omnetpp::cListener {
     omnetpp::simsignal_t serverBusySignalId;
-    int serverBeingRemovedModuleId;
-    omnetpp::cMessage* completeRemoveMsg;
+    std::set<int> serversBeingRemoved;
 
     /**
      * Sends a message so that when received (immediately) will complete the removal
      * This is used so that the signal handler can do it
      */
-    void completeServerRemoval();
+    void completeServerRemoval(int serverBeingRemovedModuleId);
 
 
-    bool isServerBeingRemoveEmpty();
+    bool isServerBeingRemoveEmpty(int serverBeingRemovedModuleId);
   protected:
     virtual void initialize();
     virtual void handleMessage(omnetpp::cMessage *msg);

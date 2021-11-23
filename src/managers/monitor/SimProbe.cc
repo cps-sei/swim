@@ -95,6 +95,10 @@ void SimProbe::receiveSignal(cComponent *source, simsignal_t signalID,
         bool value, cObject *details) {
     if (signalID == serverBusySignal) {
         std::string serverName = source->getParentModule()->getName(); // because it is nested
+        if (serverName[0] == 'R') {
+            // it is a removed server, skip it
+            return;
+        }
         auto it = utilization.find(serverName);
         if (it != utilization.end()) {
             it->second.record((value) ? 1.0 : 0.0); // busy vs idle

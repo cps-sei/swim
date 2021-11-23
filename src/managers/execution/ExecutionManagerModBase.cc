@@ -26,7 +26,7 @@ const char* ExecutionManagerModBase::SIG_SERVER_ACTIVATED = "serverActivated";
 const char* ExecutionManagerModBase::SIG_BROWNOUT_SET = "brownoutSet";
 
 
-ExecutionManagerModBase::ExecutionManagerModBase() : serverRemoveInProgress(0), testMsg(0) {
+ExecutionManagerModBase::ExecutionManagerModBase() : testMsg(0) {
 }
 
 void ExecutionManagerModBase::initialize() {
@@ -110,12 +110,11 @@ void ExecutionManagerModBase::removeServer() {
     int serverCount = pModel->getServers();
     ASSERT(serverCount > 1);
 
-    ASSERT(serverRemoveInProgress == 0); // removing a server while another is being removed not supported yet
-
-    serverRemoveInProgress++;
     BootComplete* pBootComplete = doRemoveServer();
 
-    // cancel boot complete event if needed
+    pModel->removeServer();
+
+    // cancel boot complete event if server being removed is booting
     for (BootCompletes::iterator it = pendingMessages.begin(); it != pendingMessages.end(); ++it) {
         if ((*it)->getModuleId() == pBootComplete->getModuleId()) {
             cancelAndDelete(*it);
@@ -124,6 +123,7 @@ void ExecutionManagerModBase::removeServer() {
         }
     }
     delete pBootComplete;
+    cout << "t=" << simTime() << " done executing removeServer()" << endl;
 }
 
 void ExecutionManagerModBase::setBrownout(double factor) {
@@ -135,9 +135,6 @@ void ExecutionManagerModBase::setBrownout(double factor) {
 }
 
 void ExecutionManagerModBase::notifyRemoveServerCompleted(const char* serverId) {
-
-    pModel->removeServer();
-    serverRemoveInProgress--;
 
     // emit signal to notify others (notably iProbe)
     emit(serverRemovedSignal, serverId);

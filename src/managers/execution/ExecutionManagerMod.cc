@@ -33,8 +33,7 @@ const char* INTERNAL_SERVER_MODULE_NAME = "server";
 const char* INTERNAL_QUEUE_MODULE_NAME = "queue";
 const char* SINK_MODULE_NAME = "classifier";
 
-ExecutionManagerMod::ExecutionManagerMod()
-        : serverBeingRemovedModuleId(-1), completeRemoveMsg(0) {
+ExecutionManagerMod::ExecutionManagerMod() {
     serverBusySignalId = registerSignal("busy");
 }
 
@@ -45,15 +44,14 @@ void ExecutionManagerMod::initialize() {
 }
 
 void ExecutionManagerMod::handleMessage(cMessage *msg) {
-    if (msg == completeRemoveMsg) {
-        cModule* module = getSimulation()->getModule(serverBeingRemovedModuleId);
-        notifyRemoveServerCompleted(module->getName());
+    RemoveComplete* removeCompleteMsg = dynamic_cast<RemoveComplete *>(msg);
+    if (removeCompleteMsg) {
+        cModule* module = getSimulation()->getModule(removeCompleteMsg->getModuleId());
         module->gate("out")->disconnect();
         module->deleteModule();
-        serverBeingRemovedModuleId = -1;
+        serversBeingRemoved.erase(removeCompleteMsg->getModuleId());
 
-        cancelAndDelete(msg);
-        completeRemoveMsg = 0;
+        cancelAndDelete(removeCompleteMsg);
     } else {
         ExecutionManagerModBase::handleMessage(msg);
     }
@@ -129,6 +127,7 @@ BootComplete*  ExecutionManagerMod::doRemoveServer() {
     name << SERVER_MODULE_NAME;
     name << serverCount;
     cModule *module = getParentModule()->getSubmodule(name.str().c_str());
+    ASSERT(module != nullptr);
 
     // disconnect module from load balancer
     cGate* pInGate = module->gate("in");
@@ -142,11 +141,20 @@ BootComplete*  ExecutionManagerMod::doRemoveServer() {
         //TODO this is probably leaking memory because the gate may not be being deleted
     }
 
-    serverBeingRemovedModuleId = module->getId();
+    // this will signal iProbe so that the entry that monitors this server is removed
+    notifyRemoveServerCompleted(module->getName());
+
+    // give module to be removed a new unique name
+    stringstream newName;
+    newName << "R-";
+    newName << SERVER_MODULE_NAME;
+    newName << module->getId();
+    module->setName(newName.str().c_str());
+    serversBeingRemoved.insert(module->getId());
 
     // check to see if we can delete the server immediately (or if it's busy)
-    if (isServerBeingRemoveEmpty()) {
-        completeServerRemoval();
+    if (isServerBeingRemoveEmpty(module->getId())) {
+        completeServerRemoval(module->getId());
     }
 
     BootComplete* bootComplete = new BootComplete;
@@ -164,22 +172,29 @@ void ExecutionManagerMod::doSetBrownout(double factor) {
         cModule* module = getParentModule()->getSubmodule(name.str().c_str());
         module->getSubmodule("server")->par("brownoutFactor").setDoubleValue(factor);
     }
+
+    // set brownout on servers being removed
+    for (int moduleId : serversBeingRemoved) {
+        cModule* module = getSimulation()->getModule(moduleId);
+        module->getSubmodule("server")->par("brownoutFactor").setDoubleValue(factor);
+    }
 }
 
 
-void ExecutionManagerMod::completeServerRemoval() {
+void ExecutionManagerMod::completeServerRemoval(int serverBeingRemovedModuleId) {
     Enter_Method("sendMe()");
 
     // clear cache for server, so that the next time it is instantiated it is fresh
     cModule* module = getSimulation()->getModule(serverBeingRemovedModuleId);
     check_and_cast<MTBrownoutServer*>(module->getSubmodule(INTERNAL_SERVER_MODULE_NAME))->clearServerCache();
 
-    completeRemoveMsg = new cMessage("completeRemove");
+    RemoveComplete *completeRemoveMsg = new RemoveComplete;
+    completeRemoveMsg->setModuleId(serverBeingRemovedModuleId);
     cout << "scheduled complete remove at " << simTime() << endl;
     scheduleAt(simTime(), completeRemoveMsg);
 }
 
-bool ExecutionManagerMod::isServerBeingRemoveEmpty() {
+bool ExecutionManagerMod::isServerBeingRemoveEmpty(int serverBeingRemovedModuleId) {
     bool isEmpty = false;
     cModule* module = getSimulation()->getModule(serverBeingRemovedModuleId);
     MTServer* internalServer = check_and_cast<MTServer*> (module->getSubmodule(INTERNAL_SERVER_MODULE_NAME));
@@ -193,9 +208,12 @@ bool ExecutionManagerMod::isServerBeingRemoveEmpty() {
 }
 
 void ExecutionManagerMod::receiveSignal(cComponent *source, simsignal_t signalID, bool value, cObject *details) {
-    if (signalID == serverBusySignalId && source->getParentModule()->getId() == serverBeingRemovedModuleId) {
-        if (value == false && isServerBeingRemoveEmpty()) {
-            completeServerRemoval();
+    if (signalID == serverBusySignalId && value == false) {
+        int serverModuleId = source->getParentModule()->getId();
+        if (serversBeingRemoved.find(serverModuleId) != serversBeingRemoved.end()) {
+            if (isServerBeingRemoveEmpty(serverModuleId)) {
+                completeServerRemoval(serverModuleId);
+            }
         }
     }
 }
